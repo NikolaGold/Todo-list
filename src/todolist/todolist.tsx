@@ -2,7 +2,7 @@ import * as React from 'react';
 import './todolist.css';
 import NewItem from './itemlist/new-item';
 import Item from './itemlist/item';
-import ItemInterface from './itemlist/item';
+import {ItemInterface} from './itemlist/item';
 
 export interface Props {
 }
@@ -19,21 +19,25 @@ class ToDoList extends React.Component<Props, ComponentState> {
 	}
 
 	componentWillMount() {
-		const items = [{id: 'a', name: 'b'}];
+		const items = [
+			{id: 'a', name: 'House cleaning'},
+			{id: 'b', name: 'Washing up'},
+			{id: 'c', name: 'Buy milk'}
+			];
 		this.setState((prevState: ComponentState) => ({
-  			items: [...prevState.items, items[0]]
+  			items: [...prevState.items, items[0], items[1], items[2]]
 		}))
 	}
 
   public render() {
     return (
  	<div>
- 		<h1>Todo list</h1>
+ 		<h1 className="text-center">Todo list</h1>
  		<NewItem setItem={(item) => this.setItem(item)} addItem={() => this.addItem() }/>
- 		<table className="table table-sm table-dark">
+ 		<table className="table table-striped">
     		<thead>
     			<tr>
-    				<th scope="col" className="text-center">List</th>
+    				<th scope="col" className="text-center" colSpan={4} >List</th>
     			</tr>
     		</thead>
     		<tbody>
@@ -63,10 +67,15 @@ class ToDoList extends React.Component<Props, ComponentState> {
 	}
 
 	private addItem() {
-		this.setState((prevState: ComponentState) => ({
-  			items: [...prevState.items, this.state.newItem]
-		}))
+		if(this.state.newItem != null && this.state.newItem.name.length > 0){
+			this.setState((prevState: ComponentState) => ({
+	  			items: [...prevState.items, this.state.newItem!]
+			}))
+	} else{
+		alert('Nothing entered!');
+	}
 	}
 }
+
 
 export default ToDoList;
