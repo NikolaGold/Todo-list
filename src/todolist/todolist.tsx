@@ -12,20 +12,24 @@ export interface ComponentState {
 	items: Array<ItemInterface>;
 	itemName: string;
 	itemId: string;
+	isChecked: boolean;
+	strike: string;
 }
 
 class ToDoList extends React.Component<Props, ComponentState> {
 	public state: ComponentState = {
 		items: [],
 		itemName: '',
-		itemId: ''
+		itemId: '',
+		isChecked: false,
+		strike: 'none'
 	}
 
 	componentWillMount() {
 		const items = [
-			{id: '1', name: 'House cleaning'},
-			{id: '2', name: 'Washing up'},
-			{id: '3', name: 'Buy milk'}
+			{isChecked:false, strike: 'none', id: '1', name: 'House cleaning'},
+			{isChecked:false, strike: 'none', id: '2', name: 'Washing up'},
+			{isChecked:false, strike: 'none', id: '3', name: 'Buy milk'}
 		];
 		this.setState((prevState: ComponentState) => ({
   			items: [...prevState.items, items[0], items[1], items[2]]
@@ -60,7 +64,8 @@ class ToDoList extends React.Component<Props, ComponentState> {
 	  	for(const item of this.state.items) {
 	  		items.push(
 	    		<Item key={item.id} item={item} 
-	    			deleteItem={(deletedItemId: string) => this.deleteItem(deletedItemId)} />
+	    			deleteItem={(deletedItemId: string) => this.deleteItem(deletedItemId)}
+	    			handleChange={(handleChangeStrike: boolean)=> this.handleChange(handleChangeStrike)} doneItem={(check: boolean)=> this.doneItem(check)}/>
 	    	)
 	  	}
 	    return items;
@@ -71,6 +76,8 @@ class ToDoList extends React.Component<Props, ComponentState> {
 			const newId = uuid();
 			this.setState({itemId: newId});
 			const item = {
+				isChecked:false,
+				strike: 'none',
 				id: newId,
 				name: this.state.itemName
 			};
@@ -78,7 +85,6 @@ class ToDoList extends React.Component<Props, ComponentState> {
 			this.setState((prevState: ComponentState) => ({
 	  			items: [...prevState.items, item]
 			}));
-			console.log(this.state.items)
 		} else {
 			alert('Nothing entered!');
 		}
@@ -87,6 +93,15 @@ class ToDoList extends React.Component<Props, ComponentState> {
 	private deleteItem(deletedItemId: string): void {
 		this.setState({items: this.state.items.filter(item => item.id !== deletedItemId)})
 	}
+	private handleChange(handleChangeStrike:boolean): void {
+		this.setState({isChecked: true})
+    };
+    //tady
+    private doneItem(check: boolean): void{
+    	if(check == true){
+    		console.log('hotovo')
+    	} else{ console.log('jsi mimo')}
+    }
 }
 
 export default ToDoList;
