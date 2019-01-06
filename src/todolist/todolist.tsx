@@ -10,8 +10,8 @@ export interface Props {
 
 export interface ComponentState {
 	items: Array<ItemInterface>;
-	itemName: string;
 	itemId: string;
+	itemName: string;
 	isChecked: boolean;
 	strike: string;
 }
@@ -19,8 +19,8 @@ export interface ComponentState {
 class ToDoList extends React.Component<Props, ComponentState> {
 	public state: ComponentState = {
 		items: [],
-		itemName: '',
 		itemId: '',
+		itemName: '',
 		isChecked: false,
 		strike: 'none'
 	}
@@ -76,10 +76,10 @@ class ToDoList extends React.Component<Props, ComponentState> {
 			const newId = uuid();
 			this.setState({itemId: newId});
 			const item = {
-				isChecked:false,
-				strike: 'none',
 				id: newId,
-				name: this.state.itemName
+				name: this.state.itemName,
+				isChecked:false,
+				strike: 'none'
 			};
 
 			this.setState((prevState: ComponentState) => ({
