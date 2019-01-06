@@ -3,6 +3,7 @@ import pencil from './images/pencil.png';
 
 export interface Props {
 	item: ItemInterface;
+	deleteItem: (deletedItemId: string) => void;
 }
 
 export interface ItemInterface {
@@ -27,7 +28,10 @@ class Item extends React.Component<Props> {
 				</button>
 			</td>
 			<td>
-				<button type="button" className="btn btn-danger">X</button>
+				<button type="button" className="btn btn-danger" 
+						onClick={()=> this.props.deleteItem(this.props.item.id)}>
+					X
+				</button>
 			</td>
   		</tr>
     );
