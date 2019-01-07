@@ -47,7 +47,14 @@ class ToDoList extends React.Component<Props, ComponentState> {
  				{this.renderItems()} 
      		</tbody>
      	</table>
-     	<p>Number of completed tasks:{this.getNumberOfUncompletedTasks()}</p>
+     	<button 
+     		type="button" 
+     		className="btn btn-danger" 
+     		onClick={() => this.deleteAllCompletedTasks()}
+     	>
+     		Delete all completed tasks
+     	</button>
+     	<p>Number of uncompleted tasks:{this.getNumberOfUncompletedTasks()}</p>
   	</div>
   	)
   }
@@ -130,6 +137,10 @@ class ToDoList extends React.Component<Props, ComponentState> {
 			}
 		})
     }
+
+   	private deleteAllCompletedTasks(): void {
+   		this.setState({items: this.state.items.filter(item => !item.isChecked)})
+   	}
 
 }
 
