@@ -1,6 +1,6 @@
 import * as React from 'react';
-import pencil from './images/pencil.png';
-import './item.css';
+import pencil from './Images/pencil.png';
+import './Item.css';
 
 export interface Props {
 	item: ItemInterface;

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import './todolist.css';
-import NewItem from './itemlist/new-item';
-import Item from './itemlist/item';
-import {ItemInterface} from './itemlist/item';
+import './Todo-list.css';
+import NewItem from './Item-list/New-item';
+import Item from './Item-list/Item';
+import {ItemInterface} from './Item-list/Item';
 const uuid = require('uuidv4');
 
 export interface Props {
@@ -14,11 +14,11 @@ export interface ComponentState {
 	itemName: string;
 }
 
-class ToDoList extends React.Component<Props, ComponentState> {
+class TodoList extends React.Component<Props, ComponentState> {
 	public state: ComponentState = {
 		items: [],
 		itemId: '',
-		itemName: ''
+		itemName: '',
 	};
 
 	componentWillMount() {
@@ -39,7 +39,8 @@ class ToDoList extends React.Component<Props, ComponentState> {
 		<NewItem 
 			setItem={(item) => this.setItem(item)} 
 			addItem={() => this.addItem() }
-			/>
+			itemName={this.state.itemName}
+		/>
 		<table className="table table-striped">
 			<thead>
 				<tr>
@@ -92,14 +93,15 @@ class ToDoList extends React.Component<Props, ComponentState> {
 		if (this.state.itemName.length > 0) {
 			const newId = uuid();
 			const item = {
-			id: newId,
-			name: this.state.itemName,
-			isChecked:false
+				id: newId,
+				name: this.state.itemName,
+				isChecked:false
 			};
 
 			this.setState((prevState: ComponentState) => ({
 			items: [...prevState.items, item],
-				itemId: newId
+				itemId: newId,
+				itemName: '',
 			}));
 		} else {
 			alert('Nothing entered!');
@@ -153,4 +155,4 @@ class ToDoList extends React.Component<Props, ComponentState> {
 
 }
 
-export default ToDoList;
+export default TodoList;

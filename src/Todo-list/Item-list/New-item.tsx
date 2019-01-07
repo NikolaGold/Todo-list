@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 export interface Props {
+  itemName: string;
   addItem: () => void;
-  setItem: (itemName:  string) => void;
+  setItem: (itemName: string) => void;
 }
 
 
@@ -15,6 +16,7 @@ class NewItem extends React.Component<Props> {
           placeholder="You are writing here" 
           aria-label="UserName" 
           aria-describedby="basic-addon1"
+          value={this.props.itemName}
         /> 
         <button  
           type="button" 

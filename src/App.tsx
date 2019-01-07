@@ -1,13 +1,13 @@
 import * as React from 'react';
 import './App.css';
-import ToDoList from './todolist/todolist';
+import TodoList from './Todo-list/Todo-list';
 
 class App extends React.Component {
   public render() {
     return (
       <div>
         <header>
-          <ToDoList />
+          <TodoList />
         </header>
       </div>
     );
