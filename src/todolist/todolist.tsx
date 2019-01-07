@@ -32,65 +32,74 @@ class ToDoList extends React.Component<Props, ComponentState> {
 		}))
 	}
 
-  public render() {
-    return (
- 	<div>
- 		<h1 className="text-center">Todo list</h1>
- 		<NewItem setItem={(item) => this.setItem(item)} addItem={() => this.addItem() }/>
- 		<table className="table table-striped">
-    		<thead>
-    			<tr>
-    				<th scope="col" className="text-center" colSpan={4} >List</th>
-    			</tr>
-    		</thead>
-    		<tbody>
- 				{this.renderItems()} 
-     		</tbody>
-     	</table>
-     	<button 
-     		type="button" 
-     		className="btn btn-danger" 
-     		onClick={() => this.deleteAllCompletedTasks()}
-     	>
-     		Delete all completed tasks
-     	</button>
-     	<p>Number of uncompleted tasks:{this.getNumberOfUncompletedTasks()}</p>
-  	</div>
-  	)
-  }
+	public render() {
+	return (
+	<div>
+		<h1 className="text-center">Todo list</h1>
+		<NewItem 
+			setItem={(item) => this.setItem(item)} 
+			addItem={() => this.addItem() }
+			/>
+		<table className="table table-striped">
+			<thead>
+				<tr>
+					<th 
+						scope="col" 
+						className="text-center" 
+						colSpan={4} 
+						>
+						List
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{this.renderItems()} 
+			</tbody>
+		</table>
+		<button 
+			type="button" 
+			className="btn btn-danger" 
+			onClick={() => this.deleteAllCompletedTasks()}
+		>
+			Delete all completed tasks
+		</button>
+		<p>Number of uncompleted tasks:{this.getNumberOfUncompletedTasks()}</p>
+	</div>
+	)
+	}
 	private setItem(itemName: string): void {
-  		this.setState({itemName: itemName})
-  	}
+		this.setState({itemName: itemName})
+	}
 
 	private renderItems(): Array<JSX.Element> {
 		const items = [];
-	  
-	  	for(const item of this.state.items) {
-	  		items.push(
-	    		<Item 
-	    			key={item.id} 
-	    			item={item} 
-	    			deleteItem={(deletedItemId: string) => this.deleteItem(deletedItemId)}
-	    			handleStatusChange={(itemId: string)=> this.handleStatusChange(itemId)}
-	    			handleValueChange={(itemId: string, itemName: string)=> this.handleValueChange(itemId, itemName)}
-	    		/>
-	    	)
-	  	}
-	    return items;
+
+		for(const item of this.state.items) {
+			items.push(
+				<Item 
+					key={item.id} 
+					item={item} 
+					deleteItem={(deletedItemId: string) => this.deleteItem(deletedItemId)}
+					handleStatusChange={(itemId: string)=> this.handleStatusChange(itemId)}
+					handleValueChange={(itemId: string, itemName: string)=> this.handleValueChange(itemId, itemName)}
+				/>
+			)
+		}
+		return items;
 	}
 
 	private addItem() {
 		if (this.state.itemName.length > 0) {
 			const newId = uuid();
 			const item = {
-				id: newId,
-				name: this.state.itemName,
-				isChecked:false
+			id: newId,
+			name: this.state.itemName,
+			isChecked:false
 			};
 
 			this.setState((prevState: ComponentState) => ({
-	  			items: [...prevState.items, item],
-	  			itemId: newId
+			items: [...prevState.items, item],
+				itemId: newId
 			}));
 		} else {
 			alert('Nothing entered!');
@@ -103,44 +112,44 @@ class ToDoList extends React.Component<Props, ComponentState> {
 
 	private handleStatusChange(itemId: string): void {
 		this.setState((prevState: ComponentState) => {
-		 	const newItems:Array<ItemInterface> = Object.assign([], prevState.items);
+			const newItems:Array<ItemInterface> = Object.assign([], prevState.items);
 
-		 	newItems.forEach((item) => {
-		 		if(item.id === itemId){
-		 			item.isChecked = !item.isChecked;
-		 		}
-		 	});
+			newItems.forEach((item) => {
+				if(item.id === itemId){
+					item.isChecked = !item.isChecked;
+				}
+			});
 
 			return { 
 				items: newItems,
 			}
 		})
-    };
+	};
 
-    private getNumberOfUncompletedTasks(): number {
-    	return this.state.items.filter(item => !item.isChecked).length;
-    }
+	private getNumberOfUncompletedTasks(): number {
+		return this.state.items.filter(item => !item.isChecked).length;
+	}
 
 	private handleValueChange(itemId: string, itemName:string): void {
 		const newValue = prompt("Please enter your task", itemName);
 		this.setState((prevState: ComponentState) => {
-		 	const newItems:Array<ItemInterface> = Object.assign([], prevState.items);
+			const newItems:Array<ItemInterface> = Object.assign([], prevState.items);
 
-		 	newItems.forEach((item) => {
-		 		if(item.id === itemId && newValue !== null){
-		 			item.name = newValue;
-		 		}
-		 	});
+			newItems.forEach((item) => {
+				if(item.id === itemId && newValue !== null){
+					item.name = newValue;
+				}
+			});
 
 			return { 
 				items: newItems,
 			}
 		})
-    }
+	}
 
-   	private deleteAllCompletedTasks(): void {
-   		this.setState({items: this.state.items.filter(item => !item.isChecked)})
-   	}
+	private deleteAllCompletedTasks(): void {
+		this.setState({items: this.state.items.filter(item => !item.isChecked)})
+	}
 
 }
 
