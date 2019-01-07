@@ -47,6 +47,7 @@ class ToDoList extends React.Component<Props, ComponentState> {
  				{this.renderItems()} 
      		</tbody>
      	</table>
+     	<p>Number of completed tasks:{this.getNumberOfCompletedTasks()}</p>
   	</div>
   	)
   }
@@ -104,6 +105,10 @@ class ToDoList extends React.Component<Props, ComponentState> {
 			}
 		})
     };
+
+    private getNumberOfCompletedTasks(): number {
+    	return this.state.items.filter(item => item.isChecked === true).length;
+    }
 
 }
 
