@@ -4,8 +4,7 @@ import pencil from './images/pencil.png';
 export interface Props {
 	item: ItemInterface;
 	deleteItem: (deletedItemId: string) => void;
-	handleChange:(handleChangeStrike: boolean) => void;
-	doneItem:(check: boolean) => void;
+	handleChange:(itemId: string) => void;
 }
 
 export interface ItemInterface {
@@ -20,7 +19,11 @@ class Item extends React.Component<Props> {
     return (   
 		<tr>
 			<td>
-				<input type="checkbox"  onChange={()=> this.props.handleChange(this.props.item.isChecked)} />
+				<input 
+					type="checkbox"
+					onChange={()=> this.props.handleChange(this.props.item.id)}
+					checked={this.props.item.isChecked}
+				/>
 			</td>
 			<td>
 				{this.props.item.name}

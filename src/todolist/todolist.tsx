@@ -12,24 +12,20 @@ export interface ComponentState {
 	items: Array<ItemInterface>;
 	itemId: string;
 	itemName: string;
-	isChecked: boolean;
-	strike: string;
 }
 
 class ToDoList extends React.Component<Props, ComponentState> {
 	public state: ComponentState = {
 		items: [],
 		itemId: '',
-		itemName: '',
-		isChecked: false,
-		strike: 'none'
-	}
+		itemName: ''
+	};
 
 	componentWillMount() {
 		const items = [
-			{isChecked:false, strike: 'none', id: '1', name: 'House cleaning'},
-			{isChecked:false, strike: 'none', id: '2', name: 'Washing up'},
-			{isChecked:false, strike: 'none', id: '3', name: 'Buy milk'}
+			{isChecked:false, id: '1', name: 'House cleaning'},
+			{isChecked:false, id: '2', name: 'Washing up'},
+			{isChecked:false, id: '3', name: 'Buy milk'}
 		];
 		this.setState((prevState: ComponentState) => ({
   			items: [...prevState.items, items[0], items[1], items[2]]
@@ -48,7 +44,7 @@ class ToDoList extends React.Component<Props, ComponentState> {
     			</tr>
     		</thead>
     		<tbody>
- 				{this.renderItem()} 
+ 				{this.renderItems()} 
      		</tbody>
      	</table>
   	</div>
@@ -58,14 +54,14 @@ class ToDoList extends React.Component<Props, ComponentState> {
   		this.setState({itemName: itemName})
   	}
 
-	private renderItem(): Array<JSX.Element> {
+	private renderItems(): Array<JSX.Element> {
 		const items = [];
 	  
 	  	for(const item of this.state.items) {
 	  		items.push(
 	    		<Item key={item.id} item={item} 
 	    			deleteItem={(deletedItemId: string) => this.deleteItem(deletedItemId)}
-	    			handleChange={(handleChangeStrike: boolean)=> this.handleChange(handleChangeStrike)} doneItem={(check: boolean)=> this.doneItem(check)}/>
+	    			handleChange={(itemId: string)=> this.handleChange(itemId)}/>
 	    	)
 	  	}
 	    return items;
@@ -74,16 +70,15 @@ class ToDoList extends React.Component<Props, ComponentState> {
 	private addItem() {
 		if (this.state.itemName.length > 0) {
 			const newId = uuid();
-			this.setState({itemId: newId});
 			const item = {
 				id: newId,
 				name: this.state.itemName,
-				isChecked:false,
-				strike: 'none'
+				isChecked:false
 			};
 
 			this.setState((prevState: ComponentState) => ({
-	  			items: [...prevState.items, item]
+	  			items: [...prevState.items, item],
+	  			itemId: newId
 			}));
 		} else {
 			alert('Nothing entered!');
@@ -93,15 +88,23 @@ class ToDoList extends React.Component<Props, ComponentState> {
 	private deleteItem(deletedItemId: string): void {
 		this.setState({items: this.state.items.filter(item => item.id !== deletedItemId)})
 	}
-	private handleChange(handleChangeStrike:boolean): void {
-		this.setState({isChecked: true})
+
+	private handleChange(itemId: string): void {
+		this.setState((prevState: ComponentState) => {
+		 	const newItems:Array<ItemInterface> = Object.assign([], prevState.items);
+
+		 	newItems.forEach((item) => {
+		 		if(item.id === itemId){
+		 			item.isChecked = !item.isChecked;
+		 		}
+		 	});
+
+			return { 
+				items: newItems,
+			}
+		})
     };
-    //tady
-    private doneItem(check: boolean): void{
-    	if(check == true){
-    		console.log('hotovo')
-    	} else{ console.log('jsi mimo')}
-    }
+
 }
 
 export default ToDoList;
