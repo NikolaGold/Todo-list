@@ -1,5 +1,6 @@
 import * as React from 'react';
 import pencil from './images/pencil.png';
+import './item.css';
 
 export interface Props {
 	item: ItemInterface;
@@ -17,7 +18,7 @@ class Item extends React.Component<Props> {
 
   public render() {
     return (   
-		<tr>
+		<tr className={this.props.item.isChecked ? "strike" : ""}>
 			<td>
 				<input 
 					type="checkbox"
