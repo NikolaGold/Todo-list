@@ -60,9 +60,13 @@ class ToDoList extends React.Component<Props, ComponentState> {
 	  
 	  	for(const item of this.state.items) {
 	  		items.push(
-	    		<Item key={item.id} item={item} 
+	    		<Item 
+	    			key={item.id} 
+	    			item={item} 
 	    			deleteItem={(deletedItemId: string) => this.deleteItem(deletedItemId)}
-	    			handleChange={(itemId: string)=> this.handleChange(itemId)}/>
+	    			handleStatusChange={(itemId: string)=> this.handleStatusChange(itemId)}
+	    			handleValueChange={(itemId: string, itemName: string)=> this.handleValueChange(itemId, itemName)}
+	    		/>
 	    	)
 	  	}
 	    return items;
@@ -90,7 +94,7 @@ class ToDoList extends React.Component<Props, ComponentState> {
 		this.setState({items: this.state.items.filter(item => item.id !== deletedItemId)})
 	}
 
-	private handleChange(itemId: string): void {
+	private handleStatusChange(itemId: string): void {
 		this.setState((prevState: ComponentState) => {
 		 	const newItems:Array<ItemInterface> = Object.assign([], prevState.items);
 
@@ -108,6 +112,23 @@ class ToDoList extends React.Component<Props, ComponentState> {
 
     private getNumberOfUncompletedTasks(): number {
     	return this.state.items.filter(item => !item.isChecked).length;
+    }
+
+	private handleValueChange(itemId: string, itemName:string): void {
+		const newValue = prompt("Please enter your task", itemName);
+		this.setState((prevState: ComponentState) => {
+		 	const newItems:Array<ItemInterface> = Object.assign([], prevState.items);
+
+		 	newItems.forEach((item) => {
+		 		if(item.id === itemId && newValue !== null){
+		 			item.name = newValue;
+		 		}
+		 	});
+
+			return { 
+				items: newItems,
+			}
+		})
     }
 
 }

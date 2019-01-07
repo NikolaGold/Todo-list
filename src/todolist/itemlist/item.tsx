@@ -5,7 +5,8 @@ import './item.css';
 export interface Props {
 	item: ItemInterface;
 	deleteItem: (deletedItemId: string) => void;
-	handleChange:(itemId: string) => void;
+	handleStatusChange:(itemId: string) => void;
+	handleValueChange:(itemId: string, itemName: string) => void;
 }
 
 export interface ItemInterface {
@@ -22,7 +23,7 @@ class Item extends React.Component<Props> {
 			<td>
 				<input 
 					type="checkbox"
-					onChange={()=> this.props.handleChange(this.props.item.id)}
+					onChange={()=> this.props.handleStatusChange(this.props.item.id)}
 					checked={this.props.item.isChecked}
 				/>
 			</td>
@@ -30,7 +31,11 @@ class Item extends React.Component<Props> {
 				{this.props.item.name}
 			</td>
 			<td>
-				<button type="button" className="btn btn-light">
+				<button 
+					type="button" 
+					className="btn btn-light" 
+					onClick={() => this.props.handleValueChange(this.props.item.id, this.props.item.name)}
+				>
 					<img src={pencil} />
 				</button>
 			</td>
