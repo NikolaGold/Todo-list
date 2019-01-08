@@ -17,14 +17,14 @@ export interface ItemInterface {
 
 class Item extends React.Component<Props> {
 
-  public render() {
-    return (   
-		<tr className={this.props.item.isChecked ? "strike" : ""}>
-			<td>
-				<input 
-					type="checkbox"
-					onChange={()=> this.props.handleStatusChange(this.props.item.id)}
-					checked={this.props.item.isChecked}
+	public render() {
+		return (   
+			<tr className={this.props.item.isChecked ? "strike" : ""}>
+				<td>
+					<input 
+						type="checkbox"
+						onChange={()=> this.props.handleStatusChange(this.props.item.id)}
+						checked={this.props.item.isChecked}
 				/>
 			</td>
 			<td>
@@ -45,9 +45,9 @@ class Item extends React.Component<Props> {
 					X
 				</button>
 			</td>
-  		</tr>
-    );
-  }
+		</tr>
+	);
+	}
 }
 
 export default Item;

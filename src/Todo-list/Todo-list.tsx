@@ -1,8 +1,8 @@
 import * as React from 'react';
 import './Todo-list.css';
-import NewItem from './Item-list/New-item';
-import Item from './Item-list/Item';
-import {ItemInterface} from './Item-list/Item';
+import NewItem from './Item-list/New-item/New-item';
+import Item from './Item-list/Item/Item';
+import {ItemInterface} from './Item-list/Item/Item';
 const uuid = require('uuidv4');
 
 export interface Props {
@@ -59,7 +59,7 @@ class TodoList extends React.Component<Props, ComponentState> {
 		</table>
 		<button 
 			type="button" 
-			className="btn btn-danger" 
+			className="btn btn-danger btn float-right" 
 			onClick={() => this.deleteAllCompletedTasks()}
 		>
 			Delete all completed tasks
