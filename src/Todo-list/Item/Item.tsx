@@ -29,6 +29,7 @@ class Item extends React.Component<Props> {
 					/>
 				</td>
 				<td>
+					{this.props.item.name}
 				</td>
 				<td>
 					<button
