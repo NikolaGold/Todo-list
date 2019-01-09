@@ -30,4 +30,4 @@ class NewItem extends React.Component<Props> {
 	}
 }
 
-export default NewItem;]
+export default NewItem;
