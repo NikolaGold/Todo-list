@@ -1,15 +1,15 @@
 import * as React from 'react';
 import './Todo-list.css';
-import NewItem from './Item-list/New-item/New-item';
-import Item from './Item-list/Item/Item';
-import {ItemInterface} from './Item-list/Item/Item';
+import NewItem from './new-item/New-item';
+import Item from './item/Item';
+import {TodoItem} from './item/Item';
 const uuid = require('uuidv4');
 
 export interface Props {
 }
 
 export interface ComponentState {
-	items: Array<ItemInterface>;
+	items: Array<TodoItem>;
 	itemId: string;
 	itemName: string;
 }
@@ -37,7 +37,7 @@ class TodoList extends React.Component<Props, ComponentState> {
 	<div>
 		<h1 className="text-center">Todo list</h1>
 		<NewItem 
-			setItem={(item) => this.setItem(item)} 
+			setItemName={(item) => this.setItemName(item)} 
 			addItem={() => this.addItem() }
 			itemName={this.state.itemName}
 		/>
@@ -68,7 +68,7 @@ class TodoList extends React.Component<Props, ComponentState> {
 	</div>
 	)
 	}
-	private setItem(itemName: string): void {
+	private setItemName(itemName: string): void {
 		this.setState({itemName: itemName})
 	}
 
@@ -80,7 +80,7 @@ class TodoList extends React.Component<Props, ComponentState> {
 				<Item 
 					key={item.id} 
 					item={item} 
-					deleteItem={(deletedItemId: string) => this.deleteItem(deletedItemId)}
+					deleteItemId={(deletedItemId: string) => this.deleteItemId(deletedItemId)}
 					handleStatusChange={(itemId: string)=> this.handleStatusChange(itemId)}
 					handleValueChange={(itemId: string, itemName: string)=> this.handleValueChange(itemId, itemName)}
 				/>
@@ -108,13 +108,13 @@ class TodoList extends React.Component<Props, ComponentState> {
 		}
 	}
 
-	private deleteItem(deletedItemId: string): void {
+	private deleteItemId(deletedItemId: string): void {
 		this.setState({items: this.state.items.filter(item => item.id !== deletedItemId)})
 	}
 
 	private handleStatusChange(itemId: string): void {
 		this.setState((prevState: ComponentState) => {
-			const newItems:Array<ItemInterface> = Object.assign([], prevState.items);
+			const newItems:Array<TodoItem> = Object.assign([], prevState.items);
 
 			newItems.forEach((item) => {
 				if(item.id === itemId){
@@ -135,7 +135,7 @@ class TodoList extends React.Component<Props, ComponentState> {
 	private handleValueChange(itemId: string, itemName:string): void {
 		const newValue = prompt("Please enter your task", itemName);
 		this.setState((prevState: ComponentState) => {
-			const newItems:Array<ItemInterface> = Object.assign([], prevState.items);
+			const newItems:Array<TodoItem> = Object.assign([], prevState.items);
 
 			newItems.forEach((item) => {
 				if(item.id === itemId && newValue !== null){

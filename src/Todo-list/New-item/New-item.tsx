@@ -3,16 +3,16 @@ import * as React from 'react';
 export interface Props {
 	itemName: string;
 	addItem: () => void;
-	setItem: (itemName: string) => void;
+	setItemName: (itemName: string) => void;
 }
 
 
 class NewItem extends React.Component<Props> {
 	public render() {
 		return (
-			<div>
+			<>
 				<input 
-					onChange={(event) => this.props.setItem(event.target.value)}  
+					onChange={(event) => this.props.setItemName(event.target.value)}  
 					placeholder="You are writing here" 
 					aria-label="UserName" 
 					aria-describedby="basic-addon1"
@@ -25,9 +25,9 @@ class NewItem extends React.Component<Props> {
 				>
 					+
 				</button>
-			</div>
+			</>
 		)
-		}
+	}
 }
 
 export default NewItem;
