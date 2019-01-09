@@ -11,16 +11,16 @@ class NewItem extends React.Component<Props> {
 	public render() {
 		return (
 			<>
-				<input 
-					onChange={(event) => this.props.setItemName(event.target.value)}  
-					placeholder="You are writing here" 
-					aria-label="UserName" 
+				<input
+					onChange={(event) => this.props.setItemName(event.target.value)}
+					placeholder="You are writing here"
+					aria-label="UserName"
 					aria-describedby="basic-addon1"
 					value={this.props.itemName}
-				/> 
-				<button  
-					type="button" 
-					className="btn btn-success" 
+				/>
+				<button
+					type="button"
+					className="btn btn-success"
 					onClick={() => this.props.addItem()}
 				>
 					+
@@ -30,4 +30,4 @@ class NewItem extends React.Component<Props> {
 	}
 }
 
-export default NewItem;
+export default NewItem;]
