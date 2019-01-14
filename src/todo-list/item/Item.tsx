@@ -4,7 +4,7 @@ import './Item.css';
 
 export interface Props {
 	item: TodoItem;
-	deleteItemId: (deletedItemId: string) => void;
+	deleteItem: (itemId: string) => void;
 	handleStatusChange: (itemId: string) => void;
 	handleValueChange: (itemId: string, itemName: string) => void;
 }
@@ -42,7 +42,7 @@ class Item extends React.Component<Props> {
 				</td>
 				<td>
 					<button type="button" className="btn btn-danger"
-						onClick={() => this.props.deleteItemId(this.props.item.id)}>
+						onClick={() => this.props.deleteItem(this.props.item.id)}>
 						X
 				</button>
 				</td>

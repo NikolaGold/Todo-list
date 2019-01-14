@@ -10,14 +10,12 @@ export interface Props {
 
 export interface ComponentState {
 	items: Array<TodoItem>;
-	itemId: string;
 	itemName: string;
 }
 
 class TodoList extends React.Component<Props, ComponentState> {
 	public state: ComponentState = {
 		items: [],
-		itemId: '',
 		itemName: '',
 	};
 
@@ -37,7 +35,7 @@ class TodoList extends React.Component<Props, ComponentState> {
 			<div>
 				<h1 className="text-center">Todo list</h1>
 				<NewItem
-					setItemName={(item) => this.setItemName(item)}
+					setItemName={(itemName) => this.setItemName(itemName)}
 					addItem={() => this.addItem()}
 					itemName={this.state.itemName}
 				/>
@@ -50,7 +48,7 @@ class TodoList extends React.Component<Props, ComponentState> {
 								colSpan={4}
 							>
 								List
-					</th>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -63,7 +61,7 @@ class TodoList extends React.Component<Props, ComponentState> {
 					onClick={() => this.deleteAllCompletedTasks()}
 				>
 					Delete all completed tasks
-		</button>
+				</button>
 				<p>Number of uncompleted tasks:{this.getNumberOfUncompletedTasks()}</p>
 			</div>
 		)
@@ -80,7 +78,7 @@ class TodoList extends React.Component<Props, ComponentState> {
 				<Item
 					key={item.id}
 					item={item}
-					deleteItemId={(deletedItemId: string) => this.deleteItemId(deletedItemId)}
+					deleteItem={(itemId: string) => this.deleteItem(itemId)}
 					handleStatusChange={(itemId: string) => this.handleStatusChange(itemId)}
 					handleValueChange={(itemId: string, itemName: string) => this.handleValueChange(itemId, itemName)}
 				/>
@@ -100,7 +98,6 @@ class TodoList extends React.Component<Props, ComponentState> {
 
 			this.setState((prevState: ComponentState) => ({
 				items: [...prevState.items, item],
-				itemId: newId,
 				itemName: '',
 			}));
 		} else {
@@ -108,8 +105,8 @@ class TodoList extends React.Component<Props, ComponentState> {
 		}
 	}
 
-	private deleteItemId(deletedItemId: string): void {
-		this.setState({ items: this.state.items.filter(item => item.id !== deletedItemId) })
+	private deleteItem(itemId: string): void {
+		this.setState({ items: this.state.items.filter(item => item.id !== itemId) })
 	}
 
 	private handleStatusChange(itemId: string): void {
